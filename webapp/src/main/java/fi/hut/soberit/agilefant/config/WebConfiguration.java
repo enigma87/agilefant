@@ -5,6 +5,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+
+
+/* test commit to see if jenkins auto build works
+*/
+
 @Configuration
 @ComponentScan(basePackages = "fi.hut.soberit.agilefant.web")
 public class WebConfiguration {
