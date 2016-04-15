@@ -9,7 +9,7 @@ we need the package mapping to make package-info.java work, but it
 won't map all the package classes
 -->
 <property name="org.hibernate.envers.store_data_at_delete">true</property>
-<property name = "hibernate.show_sql" value = "true" />
+<property name = "hibernate.show_sql">true</property>
 
 <mapping package="fi.hut.soberit.agilefant.model" />
 

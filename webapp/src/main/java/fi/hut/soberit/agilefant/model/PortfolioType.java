@@ -33,7 +33,6 @@ public class PortfolioType {
 	
 	private int id;
 	private String name;
-	private Set<Story> portfolioStories;
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,16 +52,5 @@ public class PortfolioType {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@OneToMany(mappedBy = "portfoliotype")
-    @NotAudited
-    @XmlElementWrapper
-    @XmlElement(name = "story")
-	public Set<Story> getPortfolioStories() {
-		return portfolioStories;
-	}
-	public void setPortfolioStories(Set<Story> stories) {
-		portfolioStories = stories;
-	}
-	
+
 }
