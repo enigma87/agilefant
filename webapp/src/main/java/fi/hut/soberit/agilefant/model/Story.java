@@ -46,6 +46,7 @@ import flexjson.JSON;
 public class Story implements TimesheetLoggable, LabelContainer, NamedObject, TaskContainer {
     private int id;
     private String name;
+    private PortfolioType portfoliotype;
     private String description;
     private Backlog backlog;
     private StoryState state = StoryState.NOT_STARTED;
@@ -88,7 +89,17 @@ public class Story implements TimesheetLoggable, LabelContainer, NamedObject, Ta
     public void setName(String name) {
         this.name = name;
     }
-
+    
+    
+    @ManyToOne(optional = true)
+    public PortfolioType getPortfoliotype() {
+    	return portfoliotype;
+    }
+    
+    public void setPortfoliotype(PortfolioType id) {
+    	this.portfoliotype = id;
+    }
+    
     @Type(type = "escaped_text")
     @XmlElement
     public String getDescription() {
@@ -108,7 +119,7 @@ public class Story implements TimesheetLoggable, LabelContainer, NamedObject, Ta
     /**
      * With standalone iterations, backlogs can only be products or 
      * projects; iterations must have an attribute of their own because
-     * projects could not know their progress otherwise
+     * projects c`ould not know their progress otherwise
      */
     @ManyToOne(optional = true)
     public Backlog getBacklog() {

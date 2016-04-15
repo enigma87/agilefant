@@ -9,7 +9,8 @@ we need the package mapping to make package-info.java work, but it
 won't map all the package classes
 -->
 <property name="org.hibernate.envers.store_data_at_delete">true</property>
-        
+<property name = "hibernate.show_sql" value = "true" />
+
 <mapping package="fi.hut.soberit.agilefant.model" />
 
 <mapping class="fi.hut.soberit.agilefant.model.Assignment" />
@@ -40,5 +41,6 @@ won't map all the package classes
 <mapping class="fi.hut.soberit.agilefant.model.AgilefantWidget" />
 <mapping class="fi.hut.soberit.agilefant.model.WidgetCollection" />
 <mapping class="fi.hut.soberit.agilefant.model.StoryAccess" />
+<mapping class="fi.hut.soberit.agilefant.model.PortfolioType" />
 </session-factory>
 </hibernate-configuration>

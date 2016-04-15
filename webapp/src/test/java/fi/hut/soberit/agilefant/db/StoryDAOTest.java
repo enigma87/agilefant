@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import fi.hut.soberit.agilefant.model.PortfolioType;
 import fi.hut.soberit.agilefant.model.Story;
 import fi.hut.soberit.agilefant.model.User;
 import fi.hut.soberit.agilefant.test.AbstractHibernateTests;
@@ -143,6 +144,28 @@ public class StoryDAOTest extends AbstractHibernateTests {
        assertEquals(9, stories.get(0).getId());
    }
 
+   @Test
+   public void testSearchByPortfolioType() {
+	   int searchfolio = 1;
+	   String name = "parity";
+	   PortfolioType portfolio = new PortfolioType();
+	   portfolio.setId(searchfolio);
+	   portfolio.setName(name);
+	   executeClassSql();
+	   List<Story> stories = storyDAO.searchByPortfolioType(portfolio);
+	   assertEquals(4, stories.size());
+   }
+   
+   @Test
+   public void testSerchByPortfolioType_notFound() {
+	   int searchfolio =  -1;
+	   PortfolioType portfolio = new PortfolioType();
+	   portfolio.setId(searchfolio);
+	   executeClassSql();
+	   List<Story> stories = storyDAO.searchByPortfolioType(portfolio);
+	   assertEquals(0, stories.size());
+   }
+   
    @Test
    public void testSearchByName_notFound() {
        String search  = "not found string";
