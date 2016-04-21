@@ -236,6 +236,7 @@ CREATE TABLE `stories_AUD` (
   `backlog_id` int(11) DEFAULT NULL,
   `iteration_id` int(11) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
+  `portfoliotype_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`,`REV`),
   KEY `FK853E2CA420258526` (`REV`),
   CONSTRAINT `FK853E2CA420258526` FOREIGN KEY (`REV`) REFERENCES `agilefant_revisions` (`id`)

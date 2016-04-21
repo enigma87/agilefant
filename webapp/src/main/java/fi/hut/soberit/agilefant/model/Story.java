@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -91,13 +92,14 @@ public class Story implements TimesheetLoggable, LabelContainer, NamedObject, Ta
     }
     
     
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, targetEntity=PortfolioType.class)
+    @JoinColumn(name="portfoliotype_id")
     public PortfolioType getPortfoliotype() {
     	return portfoliotype;
     }
     
-    public void setPortfoliotype(PortfolioType id) {
-    	this.portfoliotype = id;
+    public void setPortfoliotype(PortfolioType portfolio) {
+    	this.portfoliotype = portfolio;
     }
     
     @Type(type = "escaped_text")

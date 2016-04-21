@@ -37,18 +37,21 @@ public class PortfolioType {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@XmlAttribute(name = "objectId")
+	@Column(name="id")
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int portfolio_id) {
+		this.id = portfolio_id;
 	}
+	
 	
 	@Column(nullable=false)
 	@XmlAttribute
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
