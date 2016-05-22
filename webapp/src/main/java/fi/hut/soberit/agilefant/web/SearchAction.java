@@ -39,6 +39,15 @@ public class SearchAction extends ActionSupport {
         return Action.SUCCESS;
     }
     
+    public String searchBacklogs() {
+    	results = this.searchBusiness.searchProjects(term);
+    	
+    	List<SearchResultRow> iterations = this.searchBusiness.searchIterations(term);
+    	results.addAll(iterations);
+    			 
+    	return Action.SUCCESS;
+    }
+    
     public String searchStories() {
         results = this.searchBusiness.searchStories(term);
         return Action.SUCCESS;

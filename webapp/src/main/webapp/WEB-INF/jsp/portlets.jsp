@@ -42,7 +42,8 @@ $(document).ready(function() {
     "iterationMetrics": "iterations.action",
     "projectMetrics": "projects.action",
     "userLoad": "users.action",
-    "story": "stories.action"
+    "story": "stories.action",
+    "portfolioMetrics": "backlogs.action"
   };
   $('.newWidgetLink').click(function() {
     var clone = $('#templates > #newWidget').clone();
@@ -263,7 +264,7 @@ Change dashboard to
       <table>
         <tr>
           <td>Type</td>
-          <td><ww:select name="type" list="#{'story':'Story','iterationMetrics':'Iteration Metrics', 'projectMetrics':'Project Metrics', 'userLoad': 'User Workload'}" cssClass="objectType"/></td>
+          <td><ww:select name="type" list="#{'story':'Story','iterationMetrics':'Iteration Metrics', 'projectMetrics':'Project Metrics', 'userLoad': 'User Workload', 'portfolioMetrics' : 'portfolio Metrics'}" cssClass="objectType"/></td>
         </tr>
         <tr>
           <td>Object</td>

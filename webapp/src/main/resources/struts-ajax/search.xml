@@ -27,7 +27,12 @@
         <param name="patterns">+originalObject.id,+label,+value, +originalObject.class,-*</param>
       </result>
     </action>
-
+ 	<action name="backlogs" method="searchBacklogs" class="searchAction">
+      <result name="success" type="json">
+        <param name="target">results</param>
+        <param name="patterns">+originalObject.id,+label,+value, +originalObject.class,-*</param>
+      </result>
+    </action>
     <action name="stories" method="searchStories" class="searchAction">
       <result name="success" type="json">
         <param name="target">results</param>
