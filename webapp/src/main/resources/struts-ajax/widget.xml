@@ -50,6 +50,10 @@
     <action name="projectMetrics" class="projectMetricsWidget" method="execute">
       <result name="success" type="dispatcher">/WEB-INF/jsp/widgets/projectMetricsWidget.jsp</result>
     </action>
+    
+     <action name="portfolioMetrics" class="portfolioMetricsWidget" method="execute">
+      <result name="success" type="dispatcher">/WEB-INF/jsp/widgets/portfolioMetricsWidget.jsp</result>
+    </action>
 
     <!-- /Widgets -->  
   </package>

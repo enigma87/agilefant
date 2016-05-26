@@ -667,4 +667,21 @@ public class IterationBusinessImpl extends GenericBusinessImpl<Iteration>
         int count = iterationDAO.getIterationCountFromReadonlyToken(readonlyToken);
         return count;
     }
+    
+    public HashMap<String, Integer> calculateIterationPortfolio(Iteration iteration) {
+    	HashMap<String, Integer> portfolioPoints = new HashMap<String, Integer>();
+    	
+    	List<Story> stories = storyBusiness.retrieveStoriesInIteration(iteration);
+    	
+    	for (Story story : stories) {
+    		String key = story.getPortfoliotype().getName();
+    		if (portfolioPoints.containsKey(key)) {
+    			portfolioPoints.put(key, portfolioPoints.get(key) + story.getStoryPoints());
+    		} else {
+    			portfolioPoints.put(key, story.getStoryPoints());
+    		}
+    	}
+    	
+    	return portfolioPoints;
+    }
 }
