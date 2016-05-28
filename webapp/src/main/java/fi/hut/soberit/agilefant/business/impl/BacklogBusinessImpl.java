@@ -2,6 +2,7 @@ package fi.hut.soberit.agilefant.business.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -217,5 +218,31 @@ public class BacklogBusinessImpl extends GenericBusinessImpl<Backlog> implements
         }
 
         return unexpected;
+    }
+    
+    public HashMap<String, Integer> calculateBacklogPortfolio(Backlog backlog) {
+    	
+    	HashMap<String, Integer> portfolioPoints = new HashMap<String, Integer>();
+    	
+    	List<Story> stories = storyBusiness.retrieveStoriesInBacklog(backlog);
+    	
+    	Iteration iteration = null;
+    	
+    	if (backlog instanceof Iteration)  {
+    		iteration = (Iteration) backlog;
+    		List<Story> iter_stories = storyBusiness.retrieveStoriesInIteration(iteration); 
+    		stories.addAll(iter_stories);
+    	}
+    	
+    	for (Story story : stories) {
+    		String key = story.getPortfoliotype().getName();
+    		if (portfolioPoints.containsKey(key)) {
+    			portfolioPoints.put(key, portfolioPoints.get(key) + story.getStoryPoints());
+    		} else {
+    			portfolioPoints.put(key, story.getStoryPoints());
+    		}
+    	}
+    	
+    	return portfolioPoints;
     }
 }

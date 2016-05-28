@@ -1,6 +1,7 @@
 package fi.hut.soberit.agilefant.business;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -79,4 +80,6 @@ public interface BacklogBusiness extends GenericBusiness<Backlog> {
     public List<Story> retrieveUnexpectedStories(Schedulable backlog);
     
     public Collection<Backlog> retrieveAllStandAloneIterations();
+    
+    public HashMap<String, Integer> calculateBacklogPortfolio(Backlog backlog);
 }

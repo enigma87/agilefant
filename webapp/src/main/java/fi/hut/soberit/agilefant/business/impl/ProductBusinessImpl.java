@@ -181,12 +181,15 @@ public class ProductBusinessImpl extends GenericBusinessImpl<Product> implements
 
             if (assignedIteration != null && !assignedIteration.isStandAlone()) {
                 backlog_id = assignedIteration.getId();
-                backlogs.get(backlog_id).getLeafStories().add(new StoryTO(story));
+                LeafStoryContainer leafCntr = backlogs.get(backlog_id); // more of a safety, when stories reference non existent iterations  
+                if (null != leafCntr) leafCntr.getLeafStories().add(new StoryTO(story));
+            
             } else if (assignedIteration != null) {
                 continue;
             } else {
                 backlog_id = story.getBacklog().getId();
-                backlogs.get(backlog_id).getLeafStories().add(new StoryTO(story));
+                LeafStoryContainer lfCntr = backlogs.get(backlog_id);
+                if (null != lfCntr) lfCntr.getLeafStories().add(new StoryTO(story));
             }
             
             
