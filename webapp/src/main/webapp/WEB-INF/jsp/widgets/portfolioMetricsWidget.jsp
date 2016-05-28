@@ -26,13 +26,24 @@
     <c:out  value="${backlog.name}" /></a></div>
 
   <%-- Metrics --%>
+  <!-- calculate total sotry points first -->
+  <c:set var="totalPoints" value="${0}"/>
+<c:forEach var="pType" items="${portfolioPoints}">
+    <c:set var="totalPoints" value="${totalPoints + pType.value}"/>
+</c:forEach>
+  
   <table>
     <tr>
       <td>
       <table>
      	 <c:forEach var="entry" items="${portfolioPoints}">
   			<tr><td><c:out value="${entry.key}"/></td>
-  				<td><c:out value="${entry.value}"/></td>
+  				<td>
+  					<div style="width: 50px; height: 1em;"  class="portfolioStateNOT_STARTED">
+      				<div class="portfolioStateDONE" style='display: inline-block; width: <fmt:formatNumber type="number" maxFractionDigits="2" value="${(entry.value div totalPoints) * 100}" />%; height: 1em;'></div>
+      				</div>
+      			</td>
+  				<td><fmt:formatNumber type="number" maxFractionDigits="1" value="${(entry.value div totalPoints) * 100}" />%</td>
   			</tr>
 		</c:forEach>
       	
