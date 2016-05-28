@@ -153,7 +153,29 @@ public class StoryDAOTest extends AbstractHibernateTests {
 	   portfolio.setName(name);
 	   executeClassSql();
 	   List<Story> stories = storyDAO.searchByPortfolioType(portfolio);
+	   
 	   assertEquals(4, stories.size());
+/*	   for (Story s: stories) {
+		   	System.err.println(s.getName() + " " + s.getPortfoliotype().getName());
+	   }
+	   
+	   portfolio.setId(2);
+	   portfolio.setName("tech-debt");
+	   stories.get(1).setPortfoliotype(portfolio);
+	   
+	   for (Story s: stories) {
+		   	System.err.println(s.getName() + " " + s.getPortfoliotype().getName());
+	   }
+	   
+	   storyDAO.store(stories.get(1));
+	   
+	   List<Story> newstories = storyDAO.searchByPortfolioType(portfolio);
+	   
+	   assertEquals(1, newstories.size());
+	   for (Story s: newstories) {
+		   	System.err.println(s.getName() + " " + s.getPortfoliotype().getName());
+	   }
+*/ 	   
    }
    
    @Test
