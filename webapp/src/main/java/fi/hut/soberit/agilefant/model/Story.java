@@ -48,6 +48,7 @@ public class Story implements TimesheetLoggable, LabelContainer, NamedObject, Ta
     private int id;
     private String name;
     private PortfolioType portfoliotype;
+    private ProductFeature productfeature;
     private String description;
     private Backlog backlog;
     private StoryState state = StoryState.NOT_STARTED;
@@ -100,6 +101,16 @@ public class Story implements TimesheetLoggable, LabelContainer, NamedObject, Ta
     
     public void setPortfoliotype(PortfolioType portfolio) {
     	this.portfoliotype = portfolio;
+    }
+    
+    @ManyToOne(optional = true, targetEntity=ProductFeature.class)
+    @JoinColumn(name="productfeature_id")
+    public ProductFeature getProductfeature() {
+    	return productfeature;
+    }
+    
+    public void setProductfeature(ProductFeature feature) {
+    	this.productfeature = feature;
     }
     
     @Type(type = "escaped_text")

@@ -36,6 +36,7 @@ import fi.hut.soberit.agilefant.db.StoryDAO;
 import fi.hut.soberit.agilefant.model.Backlog;
 import fi.hut.soberit.agilefant.model.Iteration;
 import fi.hut.soberit.agilefant.model.PortfolioType;
+import fi.hut.soberit.agilefant.model.ProductFeature;
 import fi.hut.soberit.agilefant.model.Story;
 import fi.hut.soberit.agilefant.model.StoryState;
 import fi.hut.soberit.agilefant.model.Task;
@@ -261,6 +262,38 @@ public class StoryDAOHibernate extends GenericDAOHibernate<Story> implements
 	
 		
 		
+		return asList(crit);
+	}
+
+	@Override
+	public List<Story> searchByProductFeature(ProductFeature feature) {
+		Criteria crit = this.createCriteria(Story.class);
+		Criterion featureCrit = Restrictions.eq("productfeature.id", feature.getId());
+		crit.add(featureCrit);
+		crit.addOrder(Order.asc("name"));
+		crit.setMaxResults(SearchBusiness.MAX_RESULTS_PER_TYPE);
+		
+		String op = crit.toString();
+		try {
+			CriteriaImpl criteriaImpl = (CriteriaImpl)crit;
+			SessionImplementor session = criteriaImpl.getSession();
+			SessionFactoryImplementor factory = session.getFactory();
+			CriteriaQueryTranslator translator=new CriteriaQueryTranslator(factory,criteriaImpl,criteriaImpl.getEntityOrClassName(),CriteriaQueryTranslator.ROOT_SQL_ALIAS);
+			String[] implementors = factory.getImplementors( criteriaImpl.getEntityOrClassName() );
+
+			CriteriaJoinWalker walker = new CriteriaJoinWalker((OuterJoinLoadable)factory.getEntityPersister(implementors[0]), 
+			                        translator,
+			                        factory, 
+			                        criteriaImpl, 
+			                        criteriaImpl.getEntityOrClassName(), 
+			                        session.getLoadQueryInfluencers()   );
+
+			String sql=walker.getSQLString();
+			System.out.println("\n\n\n"+ sql +"\n\n\n");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		return asList(crit);
 	}
 

@@ -65,6 +65,19 @@ public class SearchActionTest extends MockedTestCase {
         verifyAll();
     }
     
+  /*  @Test
+    @DirtiesContext
+    public void testSearchBacklogs() {
+        List<SearchResultRow> result = new ArrayList<SearchResultRow>();
+        searchAction.setTerm("foo");
+        expect(searchBusiness.searchProjects("foo")).andReturn(result);
+        replayAll();
+        searchAction.searchProjects();
+        assertEquals(result, searchAction.getResults());
+        verifyAll();
+    }
+    */
+    
     @Test
     @DirtiesContext
     public void testSearchStories() {

@@ -12,14 +12,21 @@ INSERT INTO portfoliotypes (id,  name) VALUES (2, 'tech debt');
 INSERT INTO portfoliotypes (id,  name) VALUES (3, 'distinction');
 INSERT INTO portfoliotypes (id,  name) VALUES (4, 'research');
 
+--productfeatures
+INSERT INTO productfeatures (id,  name, product_id) VALUES (1, 'messenger', 1);
+INSERT INTO productfeatures (id,  name, product_id) VALUES (2, 'file drive', 1);
+INSERT INTO productfeatures (id,  name, product_id) VALUES (3, 'accounts', 1);
+INSERT INTO productfeatures (id,  name, product_id) VALUES (4, 'gallery', 1);
+
+
 -- DONE items - total story points 25
-INSERT INTO stories (id, state, storyPoints, backlog_id, name, portfoliotype_id) VALUES (1, 5, 12, 1, 'Story 1',1);
-INSERT INTO stories (id, state, storyPoints, backlog_id, name, portfoliotype_id) VALUES (2, 5,  4, 1, 'Story 2',1);
-INSERT INTO stories (id, state, storyPoints, iteration_id, name, portfoliotype_id) VALUES (3, 5,  9, 3, 'Story 3', 1);
+INSERT INTO stories (id, state, storyPoints, backlog_id, name, portfoliotype_id, productfeature_id) VALUES (1, 5, 12, 1, 'Story 1',1, 1);
+INSERT INTO stories (id, state, storyPoints, backlog_id, name, portfoliotype_id, productfeature_id) VALUES (2, 5,  4, 1, 'Story 2',1, 3);
+INSERT INTO stories (id, state, storyPoints, iteration_id, name, portfoliotype_id, productfeature_id) VALUES (3, 5,  9, 3, 'Story 3', 1, 2);
 
 -- Not DONE items - total story points 37
-INSERT INTO stories (id, state, storyPoints, backlog_id, name, portfoliotype_id) VALUES (4, 0, 7, 1, 'Story 4', 1);
-INSERT INTO stories (id, state, storyPoints, backlog_id, name) VALUES (5, 1,     1, 1, 'Story 5');
+INSERT INTO stories (id, state, storyPoints, backlog_id, name, portfoliotype_id, productfeature_id) VALUES (4, 0, 7, 1, 'Story 4', 1, 4);
+INSERT INTO stories (id, state, storyPoints, backlog_id, name, productfeature_id) VALUES (5, 1,     1, 1, 'Story 5', 4);
 INSERT INTO stories (id, state, storyPoints, iteration_id, name) VALUES (6, 2,    18, 3, 'Story 6');
 INSERT INTO stories (id, state, storyPoints, iteration_id, name) VALUES (7, 3,     6, 3, 'Story 7');
 INSERT INTO stories (id, state, storyPoints, backlog_id, name) VALUES (8, 4,     5, 1, 'Story 8');

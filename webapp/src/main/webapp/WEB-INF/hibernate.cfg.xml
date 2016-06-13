@@ -42,5 +42,6 @@ won't map all the package classes
 <mapping class="fi.hut.soberit.agilefant.model.WidgetCollection" />
 <mapping class="fi.hut.soberit.agilefant.model.StoryAccess" />
 <mapping class="fi.hut.soberit.agilefant.model.PortfolioType" />
+<mapping class="fi.hut.soberit.agilefant.model.ProductFeature" />
 </session-factory>
 </hibernate-configuration>

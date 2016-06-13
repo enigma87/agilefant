@@ -1,6 +1,7 @@
 package fi.hut.soberit.agilefant.db;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -19,10 +20,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.hut.soberit.agilefant.model.PortfolioType;
+import fi.hut.soberit.agilefant.model.ProductFeature;
 import fi.hut.soberit.agilefant.model.Story;
 import fi.hut.soberit.agilefant.model.User;
 import fi.hut.soberit.agilefant.test.AbstractHibernateTests;
 import fi.hut.soberit.agilefant.util.StoryMetrics;
+import junit.framework.Assert;
 
 @ContextConfiguration
 @Transactional
@@ -188,6 +191,25 @@ public class StoryDAOTest extends AbstractHibernateTests {
 	   assertEquals(0, stories.size());
    }
    
+   @Test
+   public void testSerchByProductFeature() {
+	   int searchfeature =  4;
+	   ProductFeature feature = new ProductFeature();
+	   feature.setId(searchfeature);
+	   executeClassSql();
+	   List<Story> stories = storyDAO.searchByProductFeature(feature);
+	   assertEquals(2, stories.size());
+	   assertFalse(1 == stories.size());
+   }
+   @Test
+   public void testSerchByProductFeature_notFound() {
+	   int searchfolio =  -1;
+	   PortfolioType portfolio = new PortfolioType();
+	   portfolio.setId(searchfolio);
+	   executeClassSql();
+	   List<Story> stories = storyDAO.searchByPortfolioType(portfolio);
+	   assertEquals(0, stories.size());
+   }
    @Test
    public void testSearchByName_notFound() {
        String search  = "not found string";

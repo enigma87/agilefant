@@ -10,6 +10,7 @@ import org.joda.time.Interval;
 import fi.hut.soberit.agilefant.model.Backlog;
 import fi.hut.soberit.agilefant.model.Iteration;
 import fi.hut.soberit.agilefant.model.PortfolioType;
+import fi.hut.soberit.agilefant.model.ProductFeature;
 import fi.hut.soberit.agilefant.model.Story;
 import fi.hut.soberit.agilefant.model.User;
 import fi.hut.soberit.agilefant.util.StoryMetrics;
@@ -37,5 +38,7 @@ public interface StoryDAO extends GenericDAO<Story> {
     public List<Story> searchByID(Integer id);
     
     public List<Story> searchByPortfolioType(PortfolioType portfolio);
+    
+    public List<Story> searchByProductFeature(ProductFeature feature);
 
 }
