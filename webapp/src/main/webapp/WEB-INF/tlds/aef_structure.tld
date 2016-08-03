@@ -54,5 +54,9 @@
     <name>help</name>
     <path>/WEB-INF/tags/structure/help.tag</path>
   </tag-file>
+  <tag-file>
+  	<name>testPie</name>
+  	<path>/WEB-INF/tags/structure/testPie.tag</path>
+  </tag-file>>
 
 </taglib>

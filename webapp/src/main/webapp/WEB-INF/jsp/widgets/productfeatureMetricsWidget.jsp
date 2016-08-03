@@ -26,9 +26,9 @@
     <c:out  value="${backlog.name}" /></a></div>
 
   <%-- Metrics --%>
-  <!-- calculate total sotry points first -->
+  <!-- calculate total story points first -->
   <c:set var="totalPoints" value="${0}"/>
-<c:forEach var="pType" items="${portfolioPoints}">
+<c:forEach var="pType" items="${productfeatureMetrics}">
     <c:set var="totalPoints" value="${totalPoints + pType.value}"/>
 </c:forEach>
   
@@ -36,11 +36,11 @@
     <tr>
       <td>
       <table style="width: 200px;height: 150px;">
-     	 <c:forEach var="entry" items="${portfolioPoints}">
+     	 <c:forEach var="entry" items="${productfeatureMetrics}">
   			<tr><td><c:out value="${entry.key}"/></td>
   				<td>
-  					<div style="width: 50px; height: 1em;"  class="portfolioStateNOT_STARTED">
-      				<div class="portfolioStateDONE" style='display: inline-block; width: <fmt:formatNumber type="number" maxFractionDigits="2" value="${(entry.value div totalPoints) * 100}" />%; height: 1em;'></div>
+  					<div style="width: 50px; height: 1em;"  class="productfeatureStateNOT_STARTED">
+      				<div class="productfeatureStateDONE" style='display: inline-block; width: <fmt:formatNumber type="number" maxFractionDigits="2" value="${(entry.value div totalPoints) * 100}" />%; height: 1em;'></div>
       				</div>
       			</td>
   				<td><fmt:formatNumber type="number" maxFractionDigits="1" value="${(entry.value div totalPoints) * 100}" />%</td>
@@ -51,7 +51,7 @@
       </td>
       
       <td style="padding-left: 1em; vertical-align: middle;">
-        <div class="portfolioPie" style="margin: 0; background-image: ;">&nbsp;</div>
+        <div class="productfeaturePie" style="margin: 0; background-image: ;">&nbsp;</div>
           
       </td>
     </tr>
@@ -60,6 +60,6 @@
 </struct:widget>
 </c:when>
 <c:otherwise>
-  <div>Missing portfolio metric - You do not have access rights to the backlog</div>
+  <div>Missing product-feature metric - You do not have access rights to the backlog</div>
 </c:otherwise>
 </c:choose>

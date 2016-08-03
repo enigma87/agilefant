@@ -270,6 +270,15 @@
       </result>
     </action>
     
+    
+    <action name="testPieData" class="testPieAction" method="pieMetrics">
+    	<result name="success" type="json">
+    		<param name="target">portfolioPoints</param>
+    		<param name="patterns">+portfolioPoints.*</param>
+    	</result>
+    </action>
+   
+    
     <action name="iterationRowMetrics" class="iterationAction" method="iterationRowMetrics">
       <result name="success" type="dispatcher">/WEB-INF/jsp/inc/iterationRowMetrics.jsp</result>
     </action>
@@ -334,7 +343,6 @@
     <action name="ROIterationHistoryByToken" class="iterationHistoryAction" method="executeByToken">
       <result name="success" type="dispatcher">/WEB-INF/jsp/fragments/iterationMingledHistory.jsp</result>
     </action>
-    
     <!-- /Iteration actions -->  
   
   </package>

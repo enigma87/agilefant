@@ -59,4 +59,6 @@ public interface IterationBusiness extends GenericBusiness<Iteration> {
     public int getIterationCountFromReadonlyToken(String readonlyToken);
     
     public HashMap<String, Integer> calculateIterationPortfolio(Iteration iteration);
+    
+    public HashMap<String, Integer> calculateProductFeatureMetrics(Iteration iteration);
 }

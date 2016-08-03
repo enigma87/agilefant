@@ -82,4 +82,6 @@ public interface BacklogBusiness extends GenericBusiness<Backlog> {
     public Collection<Backlog> retrieveAllStandAloneIterations();
     
     public HashMap<String, Integer> calculateBacklogPortfolio(Backlog backlog);
+    
+    public HashMap<String, Integer> calculateProductfeatureMetrics(Backlog backlog);
 }

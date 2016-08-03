@@ -8,6 +8,7 @@
     <div id="backlogMenuTree">&nbsp;</div>
     <h3 id="menuAccordion-administration"><a href="#">Administration</a></h3>
     <div id="administrationMenu">&nbsp;</div>
+    <div id="testPie"> <a href="../../jsp/testPie.jsp">testPie</a></div>
 </div>
 
 

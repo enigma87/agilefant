@@ -507,6 +507,10 @@
 			<result name="error">/WEB-INF/jsp/dbImportError.jsp</result>
 			
 		</action>
+		<action name="testPie" class="testPieAction" method="pieMetrics">
+			<result name="success" type="dispatcher">/WEB-INF/jsp/testPie.jsp</result>
+			<result name="help" type="dispatcher">/WEB-INF/jsp/help.jsp</result>
+		</action>
 		
 	</package>
 	<constant name="struts.multipart.maxSize" value="104857600" />

@@ -245,4 +245,30 @@ public class BacklogBusinessImpl extends GenericBusinessImpl<Backlog> implements
     	
     	return portfolioPoints;
     }
+    
+public HashMap<String, Integer> calculateProductfeatureMetrics(Backlog backlog) {
+    	
+    	HashMap<String, Integer> productfeatureMetrics = new HashMap<String, Integer>();
+    	
+    	List<Story> stories = storyBusiness.retrieveStoriesInBacklog(backlog);
+    	
+    	Iteration iteration = null;
+    	
+    	if (backlog instanceof Iteration)  {
+    		iteration = (Iteration) backlog;
+    		List<Story> iter_stories = storyBusiness.retrieveStoriesInIteration(iteration); 
+    		stories.addAll(iter_stories);
+    	}
+    	
+    	for (Story story : stories) {
+    		String key = story.getProductfeature().getName();
+    		if (productfeatureMetrics.containsKey(key)) {
+    			productfeatureMetrics.put(key, productfeatureMetrics.get(key) + story.getStoryPoints());
+    		} else {
+    			productfeatureMetrics.put(key, story.getStoryPoints());
+    		}
+    	}
+    	
+    	return productfeatureMetrics;
+    }
 }

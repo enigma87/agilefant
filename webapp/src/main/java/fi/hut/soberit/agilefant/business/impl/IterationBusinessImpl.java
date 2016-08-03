@@ -684,4 +684,21 @@ public class IterationBusinessImpl extends GenericBusinessImpl<Iteration>
     	
     	return portfolioPoints;
     }
+    
+    public HashMap<String, Integer> calculateProductFeatureMetrics(Iteration iteration) {
+    	HashMap<String, Integer> productFeaturePoints = new HashMap<String, Integer>();
+    	
+    	List<Story> stories = storyBusiness.retrieveStoriesInIteration(iteration);
+    	
+    	for (Story story : stories) {
+    		String key = story.getProductfeature().getName();
+    		if (productFeaturePoints.containsKey(key)) {
+    			productFeaturePoints.put(key, productFeaturePoints.get(key) + story.getStoryPoints());
+    		} else {
+    			productFeaturePoints.put(key, story.getStoryPoints());
+    		}
+    	}
+    	
+    	return productFeaturePoints;
+    }
 }

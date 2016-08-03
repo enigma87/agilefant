@@ -433,7 +433,7 @@ button.dynamics-button:focus, button.dynamics-button:hover {
   width: 1em;
   text-align: center;
 }
-.storyState .portfolioState{
+.storyState .portfolioState, .productfeatureState{
 	display: block;
 	width: 65px;
 	padding: 1px;
@@ -459,10 +459,10 @@ button.dynamics-button:focus, button.dynamics-button:hover {
   text-align: center;
   
 }
-.taskStateNOT_STARTED, .storyStateNOT_STARTED, .portfolioStateNOT_STARTED{
+.taskStateNOT_STARTED, .storyStateNOT_STARTED, .portfolioStateNOT_STARTED, .productfeatureStateNOT_STARTED{
 	background-color: #dddddd;
 }
-.taskStateSTARTED, .storyStateSTARTED, .portfolioStateSTARTED{
+.taskStateSTARTED, .storyStateSTARTED, .portfolioStateSTARTED, .productfeatureStateNOT_STARTED{
 	background-color: #ffdd88;
 }
 .taskStatePENDING, .storyStatePENDING {
@@ -476,7 +476,7 @@ button.dynamics-button:focus, button.dynamics-button:hover {
 .taskStateIMPLEMENTED, .storyStateIMPLEMENTED {
 	background-color: #66ff66;
 }
-.taskStateDONE, .storyStateDONE, .portfolioStateDONE {
+.taskStateDONE, .storyStateDONE, .portfolioStateDONE, .productfeatureStateDONE {
 	background-color: #00bb44;
 	color: #eee;
 }
