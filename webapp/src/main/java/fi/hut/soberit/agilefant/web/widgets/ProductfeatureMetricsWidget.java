@@ -35,9 +35,19 @@ public class ProductfeatureMetricsWidget extends CommonWidget {
 	     return SUCCESS;
 	}
 	
-	public HashMap<String, Integer> getPortfolioPoints() {
+	
+
+	public HashMap<String, Integer> getProductfeatureMetrics() {
 		return productfeatureMetrics;
 	}
+
+
+
+	public void setProductfeatureMetrics(HashMap<String, Integer> productfeatureMetrics) {
+		this.productfeatureMetrics = productfeatureMetrics;
+	}
+
+
 
 	public boolean getAccess() {
         User user = SecurityUtil.getLoggedUser();

@@ -460,9 +460,9 @@ button.dynamics-button:focus, button.dynamics-button:hover {
   
 }
 .taskStateNOT_STARTED, .storyStateNOT_STARTED, .portfolioStateNOT_STARTED, .productfeatureStateNOT_STARTED{
-	background-color: #dddddd;
+	background-color: #ACA199;
 }
-.taskStateSTARTED, .storyStateSTARTED, .portfolioStateSTARTED, .productfeatureStateNOT_STARTED{
+.taskStateSTARTED, .storyStateSTARTED, .portfolioStateSTARTED, .productfeatureStateSTARTED{
 	background-color: #ffdd88;
 }
 .taskStatePENDING, .storyStatePENDING {
