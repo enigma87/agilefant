@@ -9,7 +9,9 @@ ModelFactory = function ModelFactory() {
   this.rootObject = null;
   this.data = {
     backlog: {},
-
+    
+    portfoliotype: {},
+    
     story: {},
     task: {},
 
@@ -43,6 +45,8 @@ ModelFactory.classNameToType = {
   "fi.hut.soberit.agilefant.model.Iteration": "backlog",
   "fi.hut.soberit.agilefant.model.Product":   "backlog",
   "fi.hut.soberit.agilefant.model.Project":   "backlog",
+  
+  "fi.hut.soberit.agilefant.model.PortfolioType": "portfoliotype",
 
   "fi.hut.soberit.agilefant.transfer.ProjectTO":   "backlog",
   "fi.hut.soberit.agilefant.transfer.ProductTO":   "backlog",
@@ -78,6 +82,8 @@ ModelFactory.classNameToJsClass = {
     "fi.hut.soberit.agilefant.model.Iteration":       IterationModel,
     "fi.hut.soberit.agilefant.model.Project":         ProjectModel,
     "fi.hut.soberit.agilefant.model.Product":         ProductModel,
+    
+    "fi.hut.soberit.agilefant.model.PortfolioType": PortfoliotypeModel,
 
     "fi.hut.soberit.agilefant.transfer.IterationTO":  IterationModel,
     "fi.hut.soberit.agilefant.transfer.ProjectTO":    ProjectModel,
@@ -105,6 +111,9 @@ ModelFactory.classNameToJsClass = {
 
 ModelFactory.typeToClassName = {
     backlog:    "fi.hut.soberit.agilefant.model.Backlog",
+    
+    portfoliotype: "fi.hut.soberit.agilefant.model.PortfolioType",
+    
     iteration:  "fi.hut.soberit.agilefant.model.Iteration",
 
     product:    "fi.hut.soberit.agilefant.model.Product",
@@ -153,7 +162,10 @@ ModelFactory.types = {
     product:    "backlog",
     /** @member ModelFactory */
     project:    "backlog",
-
+    
+    /** @member ModelFactory */
+    portfoliotype: "portfoliotype",
+    
     /** @member ModelFactory */
     story:      "story",
     /** @member ModelFactory */

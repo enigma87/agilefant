@@ -105,4 +105,6 @@ public interface TransferObjectBusiness {
      * @param stories 
      */
     public AssignedWorkTO constructAssignedWorkTO(Collection<Task> tasks, Collection<Story> stories);
+
+	public List<AutocompleteDataNode> constructPortfoliotypeAutocompleteData();
 }

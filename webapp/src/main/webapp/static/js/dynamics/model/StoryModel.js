@@ -18,7 +18,8 @@ var StoryModel = function StoryModel() {
     user: [],
     story: [],
     label: [],
-    parent: null
+    parent: null,
+    portfoliotype: null
   };
   this.metrics = {};
   this.copiedFields = {
@@ -33,6 +34,7 @@ var StoryModel = function StoryModel() {
   this.classNameToRelation = {
       "fi.hut.soberit.agilefant.model.Product":       "backlog",
       "fi.hut.soberit.agilefant.model.Project":       "backlog",
+      "fi.hut.soberit.agilefant.model.PortfolioType" : "portfoliotype",
       "fi.hut.soberit.agilefant.model.Iteration":     "iteration",
       "fi.hut.soberit.agilefant.model.User":          "user",
       "fi.hut.soberit.agilefant.model.Label":         "label",
@@ -51,6 +53,11 @@ StoryModel.Validators = {
     if (!model.getBacklog()) {
       throw "Please select a parent backlog";
     }
+  },
+  portfoliotypeValidator: function(model) {
+		  if (!model.getPortfoliotype()) {
+			  throw "Please select a portfolio type";
+		  }
   }
 };
 
@@ -83,6 +90,9 @@ StoryModel.prototype._setData = function(newData) {
   }
   if(newData.backlog) {
     this.setBacklog(ModelFactory.updateObject(newData.backlog, true));
+  }
+  if (newData.portfoliotype) {
+	  this.setPortfoliotype(ModelFactory.updateObject(newData.backlog, true));
   }
   if (newData.iteration) {
     this.setIteration(ModelFactory.updateObject(newData.iteration, true));
@@ -189,7 +199,7 @@ StoryModel.prototype._saveData = function(id, changedData) {
   var possibleBacklog = this.getBacklog();
   var possibleIteration = this.getIteration();
   
-  var url = "ajax/storeStory.action";
+ var url = "ajax/storeStory.action";
   var data = {};
   
   if (changedData.usersChanged) {
@@ -238,7 +248,10 @@ StoryModel.prototype._saveData = function(id, changedData) {
   if (possibleIteration) {
     data.iteration = possibleIteration.getId();
   }
-  
+  var portfoliotype = this.getPortfoliotype();
+  if(portfoliotype){
+	  data.portfoliotypeId = portfoliotype.getId();
+  }
   
   jQuery.ajax({
     type: "POST",
@@ -487,6 +500,15 @@ StoryModel.prototype.getBacklog = function() {
   return this.relations.backlog;
 };
 
+StoryModel.prototype.getPortfoliotype = function() {
+	
+	if (this.currentData.portfoliotype) {
+		return ModelFactory.getObject(ModelFactory.types.portfoliotype, this.currentData.portfoliotype);
+		
+	}
+	return this.relations.portfoliotype;
+};
+
 StoryModel.prototype.getIteration = function() {
   if (this.currentData.iteration) {
     return ModelFactory.getObject(ModelFactory.types.iteration, this.currentData.iteration);
@@ -508,9 +530,14 @@ StoryModel.prototype.setBacklog = function(backlog) {
   this.addRelation(backlog);
 };
 
+StoryModel.prototype.setPortfoliotype = function (portfoliotype) {
+	this.addRelation(portfoliotype);
+};
+
 StoryModel.prototype.setIteration = function(backlog) {
   this.addRelation(backlog);
 };
+
 
 
 StoryModel.prototype.setBacklogByModel = function(backlog) {

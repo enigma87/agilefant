@@ -129,6 +129,7 @@
 		<js>/static/js/dynamics/model/TeamListContainer.js</js>
 		<js>/static/js/dynamics/model/HourEntryListContainer.js</js>
 		<js>/static/js/dynamics/model/PortfolioModel.js</js>
+		<js>/static/js/dynamics/model/PortfoliotypeModel.js</js>
 		<js>/static/js/dynamics/model/LabelModel.js</js>
 		<js>/static/js/dynamics/model/DailyWorkModel.js</js>
 		<js>/static/js/dynamics/model/WorkQueueTaskModel.js</js>

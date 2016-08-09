@@ -54,6 +54,13 @@ public class AutocompleteAction extends ActionSupport {
         return Action.SUCCESS;
     }
     
+    public String portfoliotypeData() {
+    	autocompleteData = transferObjectBusiness.constructPortfoliotypeAutocompleteData();
+    	
+    	System.out.println("asdf");
+    	return Action.SUCCESS;
+    }
+    
     public String productData() {
         autocompleteData = transferObjectBusiness.constructProductAutocompleteData();
         return Action.SUCCESS;

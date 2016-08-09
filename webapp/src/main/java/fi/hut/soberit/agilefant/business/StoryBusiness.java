@@ -30,7 +30,7 @@ public interface StoryBusiness extends GenericBusiness<Story> {
     /**
      * Create and persist a new story.
      */
-    Story create(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, List<String> labelNames)
+    Story create(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, List<String> labelNames, Integer portfoliotypeId)
             throws IllegalArgumentException, ObjectNotFoundException;
 
     int create(Story story);

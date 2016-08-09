@@ -211,6 +211,13 @@ var DynamicsDecorators = {
 
     return backlog.getName();
   },
+  portfoliotypeSelectDecorator: function(portfoliotype) {
+	  
+	  if (!portfoliotype) {
+		  return "(none)";
+	  }
+	  return portfoliotype.getName();
+  },
   iterationSelectDecorator: function(iteration) {
   	if (!iteration) {
   	  return "(none)"; 

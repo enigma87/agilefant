@@ -34,7 +34,10 @@ public class StoryAction extends ActionSupport implements CRUDAction, Prefetchin
 
     private int backlogId = 0;
 
-    @PrefetchId
+    private int portfoliotypeId;
+
+
+	@PrefetchId
     private Integer storyId;
     
     private Integer targetStoryId;
@@ -89,7 +92,7 @@ public class StoryAction extends ActionSupport implements CRUDAction, Prefetchin
     // CRUD
     
     public String create() {
-        story = this.storyBusiness.create(story, backlogId, iteration, userIds, labelNames);
+        story = this.storyBusiness.create(story, backlogId, iteration, userIds, labelNames, portfoliotypeId);
         StoryRank rank = storyRankBusiness.getRankByBacklog(story, story.getBacklog());
         
         story = new StoryTO(story);
@@ -238,6 +241,14 @@ public class StoryAction extends ActionSupport implements CRUDAction, Prefetchin
         this.backlogId = backlogId;
     }
 
+    public int getPortfoliotypeId() {
+		return portfoliotypeId;
+	}
+
+	public void setPortfoliotypeId(int portfoliotypeId) {
+		this.portfoliotypeId = portfoliotypeId;
+	}
+	
     public Story getStory() {
         return story;
     }

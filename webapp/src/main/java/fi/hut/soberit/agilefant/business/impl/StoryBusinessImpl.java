@@ -17,6 +17,7 @@ import fi.hut.soberit.agilefant.business.HourEntryBusiness;
 import fi.hut.soberit.agilefant.business.IterationBusiness;
 import fi.hut.soberit.agilefant.business.IterationHistoryEntryBusiness;
 import fi.hut.soberit.agilefant.business.LabelBusiness;
+import fi.hut.soberit.agilefant.business.PortfoliotypeBusiness;
 import fi.hut.soberit.agilefant.business.StoryBusiness;
 import fi.hut.soberit.agilefant.business.StoryHierarchyBusiness;
 import fi.hut.soberit.agilefant.business.StoryRankBusiness;
@@ -32,6 +33,7 @@ import fi.hut.soberit.agilefant.exception.OperationNotPermittedException;
 import fi.hut.soberit.agilefant.model.Backlog;
 import fi.hut.soberit.agilefant.model.ExactEstimate;
 import fi.hut.soberit.agilefant.model.Iteration;
+import fi.hut.soberit.agilefant.model.PortfolioType;
 import fi.hut.soberit.agilefant.model.Product;
 import fi.hut.soberit.agilefant.model.Project;
 import fi.hut.soberit.agilefant.model.Story;
@@ -81,6 +83,8 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
     private StoryTreeIntegrityBusiness storyTreeIntegrityBusiness;
     @Autowired
     private LabelBusiness labelBusiness;
+    @Autowired
+    private PortfoliotypeBusiness portfoliotypeBusiness;
     
     public StoryBusinessImpl() {
         super(Story.class);
@@ -349,7 +353,7 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
             Set<Integer> responsibleIds, List<String> labelNames) {
         Story referenceStory = this.retrieve(referenceStoryId);
         Backlog backlog = this.getBacklogForCreatedStory(referenceStory, backlogId);
-        Story story = this.persistNewStory(data, backlog.getId(), responsibleIds);
+        Story story = this.persistNewStory(data, backlog.getId(), responsibleIds, referenceStory.getPortfoliotype().getId());
         
         this.storyHierarchyBusiness.moveUnder(story, referenceStory);
         this.labelBusiness.createStoryLabels(labelNames, story.getId());
@@ -361,7 +365,7 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
             Set<Integer> responsibleIds, List<String> labelNames) {
         Story referenceStory = this.retrieve(referenceStoryId);
         Backlog backlog = this.getBacklogForCreatedStory(referenceStory, backlogId);
-        Story story = this.persistNewStory(data, backlog.getId(), responsibleIds);
+        Story story = this.persistNewStory(data, backlog.getId(), responsibleIds, referenceStory.getPortfoliotype().getId());
         
         this.storyHierarchyBusiness.moveAfter(story, referenceStory);
         this.labelBusiness.createStoryLabels(labelNames, story.getId());
@@ -451,15 +455,15 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
         return this.transferObjectBusiness.constructStoryTO(newStory);
     }
     
-    public Story create(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, List<String> labelNames) 
+    public Story create(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, List<String> labelNames, Integer portfoliotypeId) 
             throws IllegalArgumentException, ObjectNotFoundException {
         
         Story persisted = null;
         if (iterationId != null && iterationId != 0) {
-            persisted = this.persistNewStory(dataItem, backlogId, iterationId, responsibleIds);
+            persisted = this.persistNewStory(dataItem, backlogId, iterationId, responsibleIds, portfoliotypeId);
             //storyRankBusiness.rankToHead(persisted, backlogBusiness.retrieve(iterationId)); // Rank in iteration
         } else {
-            persisted = this.persistNewStory(dataItem, backlogId, responsibleIds);        
+            persisted = this.persistNewStory(dataItem, backlogId, responsibleIds, portfoliotypeId);        
         }
 
         //old - prevents tree view from exploding until it's fixed 
@@ -477,27 +481,29 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
     
     @Transactional
     /* * {@inheritDoc} */
-    private Story persistNewStory(Story dataItem, Integer backlogId, Set<Integer> responsibleIds) 
+    private Story persistNewStory(Story dataItem, Integer backlogId, Set<Integer> responsibleIds, Integer portfoliotypeId) 
             throws IllegalArgumentException, ObjectNotFoundException {
-        return persistNewStory(dataItem, backlogId, null, responsibleIds);
+        return persistNewStory(dataItem, backlogId, null, responsibleIds, portfoliotypeId);
     }
     
     
     @Transactional
     /* * {@inheritDoc} */
-    private Story persistNewStory(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds) 
+    private Story persistNewStory(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, Integer portfoliotypeId) 
             throws IllegalArgumentException, ObjectNotFoundException {
         if (dataItem == null || backlogId == null) {
             throw new IllegalArgumentException(
                     "DataItem and backlogId should not be null");
         }
         Backlog backlog = this.backlogBusiness.retrieve(backlogId);
+        PortfolioType portfoliotype = this.portfoliotypeBusiness.retrieve(portfoliotypeId);
         if (backlog == null) {
             throw new ObjectNotFoundException("backlog.notFound");
         }
 
         Story story = new Story();
 
+        story.setPortfoliotype(portfoliotype);
         this.setResponsibles(story, responsibleIds);
         this.populateStoryFields(story, dataItem);
         

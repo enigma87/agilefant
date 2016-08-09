@@ -21,9 +21,11 @@ import fi.hut.soberit.agilefant.business.StoryBusiness;
 import fi.hut.soberit.agilefant.business.TeamBusiness;
 import fi.hut.soberit.agilefant.business.TransferObjectBusiness;
 import fi.hut.soberit.agilefant.business.UserBusiness;
+import fi.hut.soberit.agilefant.business.PortfoliotypeBusiness;
 import fi.hut.soberit.agilefant.model.Assignment;
 import fi.hut.soberit.agilefant.model.Backlog;
 import fi.hut.soberit.agilefant.model.Iteration;
+import fi.hut.soberit.agilefant.model.PortfolioType;
 import fi.hut.soberit.agilefant.model.Product;
 import fi.hut.soberit.agilefant.model.Project;
 import fi.hut.soberit.agilefant.model.Schedulable;
@@ -49,6 +51,9 @@ public class TransferObjectBusinessImpl implements TransferObjectBusiness {
 
     @Autowired
     private BacklogBusiness backlogBusiness;
+    
+    @Autowired
+    private PortfoliotypeBusiness portfoliotypeBusiness;
     
     @Autowired
     private ProductBusiness productBusiness;
@@ -226,6 +231,18 @@ public class TransferObjectBusinessImpl implements TransferObjectBusiness {
         return this.authorizationBusiness.isBacklogAccessible(bl.getId(), SecurityUtil.getLoggedUser());
     }
 
+    @Override
+	public List<AutocompleteDataNode> constructPortfoliotypeAutocompleteData() {
+    	Collection<PortfolioType> portfoliotypes = this.portfoliotypeBusiness.retrieveAll();
+        List<AutocompleteDataNode> autocompleteData = new ArrayList<AutocompleteDataNode>();
+        for (PortfolioType ptype : portfoliotypes) {
+        	AutocompleteDataNode node = new AutocompleteDataNode(ptype.getClass(), ptype.getId(), ptype.getName());
+        	node.setOriginalObject(ptype);
+        	autocompleteData.add(node);
+        }
+        return autocompleteData; 
+	}
+    
     /** {@inheritDoc} */
     @Transactional(readOnly = true)
     public List<AutocompleteDataNode> constructProductAutocompleteData() {

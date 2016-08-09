@@ -68,7 +68,9 @@ CreateDialogClass.prototype.init = function(config) {
       "Ok": function() { me._ok(); }
     }
   };
+  
   jQuery.extend(opts, config);
+  
   this.element.dialog(opts);
   
   this.initializeForm();
@@ -84,8 +86,6 @@ CreateDialogClass.prototype._ok = function() {
     this.close();
   }
 };
-
-
 
 CreateDialogClass.prototype._cancel = function() {
   this.close();
@@ -270,6 +270,8 @@ CreateDialog.Project.prototype.initFormConfig = function() {
       set: ProjectModel.prototype.setParent
     }
   });
+
+
   config.addColumnConfiguration(CreateDialog.Project.columnIndices.startDate,
       ProjectController.columnConfigs.startDate);
   config.addColumnConfiguration(CreateDialog.Project.columnIndices.endDate,
@@ -419,10 +421,12 @@ CreateDialog.Story.prototype = new CreateDialogClass();
 CreateDialog.Story.columnIndices = {
   name:       0,
   backlog:    1,
-  state:      2,
-  storyPoints:3,
-  responsibles:4,
-  description:5
+  portfoliotype: 2,
+  state:      3,
+  storyPoints:4,
+  responsibles:5,
+  description:6
+  
 };
 CreateDialog.Story.prototype.initFormConfig = function() {
   var config = new DynamicTableConfiguration({
@@ -466,6 +470,21 @@ CreateDialog.Story.prototype.initFormConfig = function() {
       decorator: DynamicsDecorators.propertyDecoratorFactory(BacklogModel.prototype.getName),
       set: StoryModel.prototype.setBacklog,
       visualizeRequired: true
+    }
+  });
+
+
+  config.addColumnConfiguration(CreateDialog.Story.columnIndices.portfoliotype, {
+    title: "Portfolio Type",
+    get: StoryModel.prototype.getPortfoliotype,
+    decorator: DynamicsDecorators.portfoliotypeSelectDecorator,
+    editable: true,
+    edit: {
+    	editor: "InlineAutocomplete",
+	dataType: "portfoliotype",      // what to do here!
+	decorator: DynamicsDecorators.propertyDecoratorFactory(PortfoliotypeModel.prototype.getName),  // read propertyDecoratorFactory
+	set: StoryModel.prototype.setPortfoliotype,
+	visualizeRequired: true
     }
   });
   

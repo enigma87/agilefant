@@ -65,6 +65,7 @@
 		<aef:javascript path="dynamics/model/TeamListContainer" />
 		<aef:javascript path="dynamics/model/HourEntryListContainer" />
 		<aef:javascript path="dynamics/model/PortfolioModel" />
+		<aef:javascript path="dynamics/model/PortfoliotypeModel" />
 		<aef:javascript path="dynamics/model/LabelModel" />
 		<aef:javascript path="dynamics/model/DailyWorkModel" />
 		<aef:javascript path="dynamics/model/WorkQueueTaskModel" />
