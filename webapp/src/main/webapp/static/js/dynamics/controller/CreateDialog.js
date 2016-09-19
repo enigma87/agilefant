@@ -422,10 +422,11 @@ CreateDialog.Story.columnIndices = {
   name:       0,
   backlog:    1,
   portfoliotype: 2,
-  state:      3,
-  storyPoints:4,
-  responsibles:5,
-  description:6
+  productfeature: 3,
+  state:      4,
+  storyPoints:5,
+  responsibles:6,
+  description:7
   
 };
 CreateDialog.Story.prototype.initFormConfig = function() {
@@ -487,6 +488,20 @@ CreateDialog.Story.prototype.initFormConfig = function() {
 	visualizeRequired: true
     }
   });
+  
+  config.addColumnConfiguration(CreateDialog.Story.columnIndices.productfeature, {
+	    title: "Product Feature",
+	    get: StoryModel.prototype.getProductfeature,
+	    decorator: DynamicsDecorators.productfeatureSelectDecorator,
+	    editable: true,
+	    edit: {
+	    	editor: "InlineAutocomplete",
+		dataType: "productfeature",      // what to do here!
+		decorator: DynamicsDecorators.propertyDecoratorFactory(ProductfeatureModel.prototype.getName),  // read propertyDecoratorFactory
+		set: StoryModel.prototype.setProductfeature,
+		visualizeRequired: true
+	    }
+	  });
   
   config.addColumnConfiguration(CreateDialog.Story.columnIndices.state,{
     title: "State",

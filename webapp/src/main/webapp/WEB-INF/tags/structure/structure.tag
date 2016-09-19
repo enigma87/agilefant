@@ -54,6 +54,7 @@
 			<aef:javascript path="jquery.autoSuggest" />
 			<aef:javascript path="jquery.labelify" />
 			<aef:javascript path="jquery.tagcloud" minify="always" />
+			<aef:javascript path="d3" />
 
 			<aef:javascript path="utils/HelpUtils" />
 			<aef:javascript path="utils/menuTimer" />

@@ -35,13 +35,17 @@ public class ProductfeatureMetricsWidget extends CommonWidget {
 	     return SUCCESS;
 	}
 	
-	
+	public String productfeatureMetrics() {
+		 backlog = backlogBusiness.retrieve(getObjectId());		 
+		 productfeatureMetrics = backlogBusiness.calculateProductfeatureMetrics(backlog);
+	     return SUCCESS;
+	}
 
 	public HashMap<String, Integer> getProductfeatureMetrics() {
 		return productfeatureMetrics;
 	}
 
-
+	
 
 	public void setProductfeatureMetrics(HashMap<String, Integer> productfeatureMetrics) {
 		this.productfeatureMetrics = productfeatureMetrics;

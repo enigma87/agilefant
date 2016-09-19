@@ -54,7 +54,22 @@
      <action name="portfolioMetrics" class="portfolioMetricsWidget" method="execute">
       <result name="success" type="dispatcher">/WEB-INF/jsp/widgets/portfolioMetricsWidget.jsp</result>
     </action>
-
+    
+	<action name="portfolioMetricsJSON" class="portfolioMetricsWidget" method="portfolioMetrics">
+    	<result name="success" type="json">
+    		<param name="target">portfolioPoints</param>
+    		<param name="patterns">+portfolioPoints.*</param>
+    	</result>
+    </action>
+    
+    
+    <action name="productfeatureMetricsJSON" class="productfeatureMetricsWidget" method="productfeatureMetrics">
+    	<result name="success" type="json">
+    		<param name="target">productfeatureMetrics</param>
+    		<param name="patterns">+productfeatureMetrics.*</param>
+    	</result>
+    </action>
+    
      <action name="productfeatureMetrics" class="productfeatureMetricsWidget" method="execute">
       <result name="success" type="dispatcher">/WEB-INF/jsp/widgets/productfeatureMetricsWidget.jsp</result>
     </action>

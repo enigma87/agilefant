@@ -19,7 +19,8 @@ var StoryModel = function StoryModel() {
     story: [],
     label: [],
     parent: null,
-    portfoliotype: null
+    portfoliotype: null,
+    productfeature: null
   };
   this.metrics = {};
   this.copiedFields = {
@@ -35,6 +36,7 @@ var StoryModel = function StoryModel() {
       "fi.hut.soberit.agilefant.model.Product":       "backlog",
       "fi.hut.soberit.agilefant.model.Project":       "backlog",
       "fi.hut.soberit.agilefant.model.PortfolioType" : "portfoliotype",
+      "fi.hut.soberit.agilefant.model.ProductFeature" : "productfeature",
       "fi.hut.soberit.agilefant.model.Iteration":     "iteration",
       "fi.hut.soberit.agilefant.model.User":          "user",
       "fi.hut.soberit.agilefant.model.Label":         "label",
@@ -58,7 +60,12 @@ StoryModel.Validators = {
 		  if (!model.getPortfoliotype()) {
 			  throw "Please select a portfolio type";
 		  }
-  }
+  },
+  productfeatureValidator: function(model) {
+	  if (!model.getProductfeature()) {
+		  throw "Please select a product feature";
+	  }
+}
 };
 
 /**
@@ -93,6 +100,9 @@ StoryModel.prototype._setData = function(newData) {
   }
   if (newData.portfoliotype) {
 	  this.setPortfoliotype(ModelFactory.updateObject(newData.backlog, true));
+  }
+  if (newData.productfeature) {
+	  this.setProductfeature(ModelFactory.updateObject(newData.backlog, true));
   }
   if (newData.iteration) {
     this.setIteration(ModelFactory.updateObject(newData.iteration, true));
@@ -251,6 +261,10 @@ StoryModel.prototype._saveData = function(id, changedData) {
   var portfoliotype = this.getPortfoliotype();
   if(portfoliotype){
 	  data.portfoliotypeId = portfoliotype.getId();
+  }
+  var productfeature = this.getProductfeature();
+  if(productfeature){
+	  data.productfeatureId = productfeature.getId();
   }
   
   jQuery.ajax({
@@ -509,6 +523,15 @@ StoryModel.prototype.getPortfoliotype = function() {
 	return this.relations.portfoliotype;
 };
 
+StoryModel.prototype.getProductfeature = function() {
+	
+	if (this.currentData.productfeature) {
+		return ModelFactory.getObject(ModelFactory.types.productfeature, this.currentData.productfeature);
+		
+	}
+	return this.relations.productfeature;
+};
+
 StoryModel.prototype.getIteration = function() {
   if (this.currentData.iteration) {
     return ModelFactory.getObject(ModelFactory.types.iteration, this.currentData.iteration);
@@ -532,6 +555,10 @@ StoryModel.prototype.setBacklog = function(backlog) {
 
 StoryModel.prototype.setPortfoliotype = function (portfoliotype) {
 	this.addRelation(portfoliotype);
+};
+
+StoryModel.prototype.setProductfeature = function (productfeature) {
+	this.addRelation(productfeature);
 };
 
 StoryModel.prototype.setIteration = function(backlog) {

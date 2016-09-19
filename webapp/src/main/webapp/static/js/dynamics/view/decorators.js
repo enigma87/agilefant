@@ -218,6 +218,14 @@ var DynamicsDecorators = {
 	  }
 	  return portfoliotype.getName();
   },
+  productfeatureSelectDecorator: function(productfeature) {
+	  
+	  if (!productfeature) {
+		  return "(none)";
+	  }
+	  return productfeature.getName();
+  },
+
   iterationSelectDecorator: function(iteration) {
   	if (!iteration) {
   	  return "(none)"; 

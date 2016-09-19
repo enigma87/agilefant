@@ -223,7 +223,7 @@ public class BacklogBusinessImpl extends GenericBusinessImpl<Backlog> implements
     public HashMap<String, Integer> calculateBacklogPortfolio(Backlog backlog) {
     	
     	HashMap<String, Integer> portfolioPoints = new HashMap<String, Integer>();
-    	
+    	try {
     	List<Story> stories = storyBusiness.retrieveStoriesInBacklog(backlog);
     	
     	Iteration iteration = null;
@@ -235,21 +235,27 @@ public class BacklogBusinessImpl extends GenericBusinessImpl<Backlog> implements
     	}
     	
     	for (Story story : stories) {
+    		if (null == story || null == story.getPortfoliotype()) continue;
     		String key = story.getPortfoliotype().getName();
+    		if (key == null) key = "none";
+    		
     		if (portfolioPoints.containsKey(key)) {
     			portfolioPoints.put(key, portfolioPoints.get(key) + story.getStoryPoints());
     		} else {
     			portfolioPoints.put(key, story.getStoryPoints());
     		}
     	}
-    	
+    	} 
+    	catch(Exception e) {
+    		System.out.println(e.getStackTrace());
+    	}
     	return portfolioPoints;
     }
     
 public HashMap<String, Integer> calculateProductfeatureMetrics(Backlog backlog) {
     	
     	HashMap<String, Integer> productfeatureMetrics = new HashMap<String, Integer>();
-    	
+    	try {
     	List<Story> stories = storyBusiness.retrieveStoriesInBacklog(backlog);
     	
     	Iteration iteration = null;
@@ -261,14 +267,19 @@ public HashMap<String, Integer> calculateProductfeatureMetrics(Backlog backlog) 
     	}
     	
     	for (Story story : stories) {
+    		if (null == story || null == story.getProductfeature()) continue;
     		String key = story.getProductfeature().getName();
+    		if (key == null) key = "none";
+    		
     		if (productfeatureMetrics.containsKey(key)) {
     			productfeatureMetrics.put(key, productfeatureMetrics.get(key) + story.getStoryPoints());
     		} else {
     			productfeatureMetrics.put(key, story.getStoryPoints());
     		}
     	}
-    	
+    	} catch (Exception e) {
+    		System.out.println(e.getStackTrace());
+    	}
     	return productfeatureMetrics;
     }
 }

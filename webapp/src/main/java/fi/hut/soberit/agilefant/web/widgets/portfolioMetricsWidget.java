@@ -35,10 +35,21 @@ public class portfolioMetricsWidget extends CommonWidget {
 	     return SUCCESS;
 	}
 	
+	
+	public String portfolioMetrics() {
+		backlog  = backlogBusiness.retrieve(getObjectId());
+		portfolioPoints = backlogBusiness.calculateBacklogPortfolio(backlog);
+		return SUCCESS;
+	}
+
 	public HashMap<String, Integer> getPortfolioPoints() {
 		return portfolioPoints;
 	}
-
+	
+	public void setPortfolioPoints(HashMap<String, Integer> portfolioPoints) {
+		this.portfolioPoints = portfolioPoints;
+	}
+	
 	public boolean getAccess() {
         User user = SecurityUtil.getLoggedUser();
         return  this.authorizationBusiness.isBacklogAccessible(backlog.getId(), user);

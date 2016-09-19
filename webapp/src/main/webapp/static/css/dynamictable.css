@@ -476,9 +476,13 @@ button.dynamics-button:focus, button.dynamics-button:hover {
 .taskStateIMPLEMENTED, .storyStateIMPLEMENTED {
 	background-color: #66ff66;
 }
-.taskStateDONE, .storyStateDONE, .portfolioStateDONE, .productfeatureStateDONE {
-	background-color: #00bb44;
+.portfolioStateDONE, .productfeatureStateDONE{
+	background-color:#6b6ecf;
 	color: #eee;
+}
+.taskStateDONE, .storyStateDONE {
+	background-color: #00bb44;
+	color: #eeeeee;
 }
 
 .taskStateDEFERRED, .storyStateDEFERRED {

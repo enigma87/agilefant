@@ -16,6 +16,7 @@ import fi.hut.soberit.agilefant.business.BacklogBusiness;
 import fi.hut.soberit.agilefant.business.HourEntryBusiness;
 import fi.hut.soberit.agilefant.business.IterationBusiness;
 import fi.hut.soberit.agilefant.business.ProductBusiness;
+import fi.hut.soberit.agilefant.business.ProductfeatureBusiness;
 import fi.hut.soberit.agilefant.business.ProjectBusiness;
 import fi.hut.soberit.agilefant.business.StoryBusiness;
 import fi.hut.soberit.agilefant.business.TeamBusiness;
@@ -27,6 +28,7 @@ import fi.hut.soberit.agilefant.model.Backlog;
 import fi.hut.soberit.agilefant.model.Iteration;
 import fi.hut.soberit.agilefant.model.PortfolioType;
 import fi.hut.soberit.agilefant.model.Product;
+import fi.hut.soberit.agilefant.model.ProductFeature;
 import fi.hut.soberit.agilefant.model.Project;
 import fi.hut.soberit.agilefant.model.Schedulable;
 import fi.hut.soberit.agilefant.model.Story;
@@ -54,6 +56,9 @@ public class TransferObjectBusinessImpl implements TransferObjectBusiness {
     
     @Autowired
     private PortfoliotypeBusiness portfoliotypeBusiness;
+    
+    @Autowired
+    private ProductfeatureBusiness productfeatureBusiness;
     
     @Autowired
     private ProductBusiness productBusiness;
@@ -243,6 +248,17 @@ public class TransferObjectBusinessImpl implements TransferObjectBusiness {
         return autocompleteData; 
 	}
     
+    @Override
+   	public List<AutocompleteDataNode> constructProductfeatureAutocompleteData() {
+       	Collection<ProductFeature> productfeatures = this.productfeatureBusiness.retrieveAll();
+           List<AutocompleteDataNode> autocompleteData = new ArrayList<AutocompleteDataNode>();
+           for (ProductFeature feature : productfeatures) {
+           	AutocompleteDataNode node = new AutocompleteDataNode(feature.getClass(), feature.getId(), feature.getName());
+           	node.setOriginalObject(feature);
+           	autocompleteData.add(node);
+           }
+           return autocompleteData; 
+   	}
     /** {@inheritDoc} */
     @Transactional(readOnly = true)
     public List<AutocompleteDataNode> constructProductAutocompleteData() {

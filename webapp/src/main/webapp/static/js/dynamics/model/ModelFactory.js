@@ -11,6 +11,7 @@ ModelFactory = function ModelFactory() {
     backlog: {},
     
     portfoliotype: {},
+    productfeature: {},
     
     story: {},
     task: {},
@@ -47,6 +48,7 @@ ModelFactory.classNameToType = {
   "fi.hut.soberit.agilefant.model.Project":   "backlog",
   
   "fi.hut.soberit.agilefant.model.PortfolioType": "portfoliotype",
+  "fi.hut.soberit.agilefant.model.ProductFeature": "productfeature",
 
   "fi.hut.soberit.agilefant.transfer.ProjectTO":   "backlog",
   "fi.hut.soberit.agilefant.transfer.ProductTO":   "backlog",
@@ -84,6 +86,7 @@ ModelFactory.classNameToJsClass = {
     "fi.hut.soberit.agilefant.model.Product":         ProductModel,
     
     "fi.hut.soberit.agilefant.model.PortfolioType": PortfoliotypeModel,
+    "fi.hut.soberit.agilefant.model.ProductFeature": ProductfeatureModel,
 
     "fi.hut.soberit.agilefant.transfer.IterationTO":  IterationModel,
     "fi.hut.soberit.agilefant.transfer.ProjectTO":    ProjectModel,
@@ -113,7 +116,8 @@ ModelFactory.typeToClassName = {
     backlog:    "fi.hut.soberit.agilefant.model.Backlog",
     
     portfoliotype: "fi.hut.soberit.agilefant.model.PortfolioType",
-    
+    productfeature: "fi.hut.soberit.agilefant.model.ProductFeature",
+    	
     iteration:  "fi.hut.soberit.agilefant.model.Iteration",
 
     product:    "fi.hut.soberit.agilefant.model.Product",
@@ -165,6 +169,9 @@ ModelFactory.types = {
     
     /** @member ModelFactory */
     portfoliotype: "portfoliotype",
+    
+    /** @member ModelFactory */
+    productfeature: "productfeature",
     
     /** @member ModelFactory */
     story:      "story",

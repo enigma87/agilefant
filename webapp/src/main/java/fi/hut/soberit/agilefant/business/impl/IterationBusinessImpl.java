@@ -674,6 +674,7 @@ public class IterationBusinessImpl extends GenericBusinessImpl<Iteration>
     	List<Story> stories = storyBusiness.retrieveStoriesInIteration(iteration);
     	
     	for (Story story : stories) {
+    		if (null == story || story.getPortfoliotype() == null) continue; 
     		String key = story.getPortfoliotype().getName();
     		if (portfolioPoints.containsKey(key)) {
     			portfolioPoints.put(key, portfolioPoints.get(key) + story.getStoryPoints());

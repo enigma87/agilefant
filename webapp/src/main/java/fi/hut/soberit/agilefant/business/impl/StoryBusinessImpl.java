@@ -18,6 +18,7 @@ import fi.hut.soberit.agilefant.business.IterationBusiness;
 import fi.hut.soberit.agilefant.business.IterationHistoryEntryBusiness;
 import fi.hut.soberit.agilefant.business.LabelBusiness;
 import fi.hut.soberit.agilefant.business.PortfoliotypeBusiness;
+import fi.hut.soberit.agilefant.business.ProductfeatureBusiness;
 import fi.hut.soberit.agilefant.business.StoryBusiness;
 import fi.hut.soberit.agilefant.business.StoryHierarchyBusiness;
 import fi.hut.soberit.agilefant.business.StoryRankBusiness;
@@ -34,6 +35,7 @@ import fi.hut.soberit.agilefant.model.Backlog;
 import fi.hut.soberit.agilefant.model.ExactEstimate;
 import fi.hut.soberit.agilefant.model.Iteration;
 import fi.hut.soberit.agilefant.model.PortfolioType;
+import fi.hut.soberit.agilefant.model.ProductFeature;
 import fi.hut.soberit.agilefant.model.Product;
 import fi.hut.soberit.agilefant.model.Project;
 import fi.hut.soberit.agilefant.model.Story;
@@ -85,6 +87,9 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
     private LabelBusiness labelBusiness;
     @Autowired
     private PortfoliotypeBusiness portfoliotypeBusiness;
+    @Autowired
+    private ProductfeatureBusiness productfeatureBusiness;
+    
     
     public StoryBusinessImpl() {
         super(Story.class);
@@ -353,7 +358,7 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
             Set<Integer> responsibleIds, List<String> labelNames) {
         Story referenceStory = this.retrieve(referenceStoryId);
         Backlog backlog = this.getBacklogForCreatedStory(referenceStory, backlogId);
-        Story story = this.persistNewStory(data, backlog.getId(), responsibleIds, referenceStory.getPortfoliotype().getId());
+        Story story = this.persistNewStory(data, backlog.getId(), responsibleIds, referenceStory.getPortfoliotype().getId(), referenceStory.getProductfeature().getId());
         
         this.storyHierarchyBusiness.moveUnder(story, referenceStory);
         this.labelBusiness.createStoryLabels(labelNames, story.getId());
@@ -365,7 +370,7 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
             Set<Integer> responsibleIds, List<String> labelNames) {
         Story referenceStory = this.retrieve(referenceStoryId);
         Backlog backlog = this.getBacklogForCreatedStory(referenceStory, backlogId);
-        Story story = this.persistNewStory(data, backlog.getId(), responsibleIds, referenceStory.getPortfoliotype().getId());
+        Story story = this.persistNewStory(data, backlog.getId(), responsibleIds, referenceStory.getPortfoliotype().getId(), referenceStory.getProductfeature().getId());
         
         this.storyHierarchyBusiness.moveAfter(story, referenceStory);
         this.labelBusiness.createStoryLabels(labelNames, story.getId());
@@ -455,15 +460,15 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
         return this.transferObjectBusiness.constructStoryTO(newStory);
     }
     
-    public Story create(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, List<String> labelNames, Integer portfoliotypeId) 
+    public Story create(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, List<String> labelNames, Integer portfoliotypeId, Integer productfeatureId) 
             throws IllegalArgumentException, ObjectNotFoundException {
         
         Story persisted = null;
         if (iterationId != null && iterationId != 0) {
-            persisted = this.persistNewStory(dataItem, backlogId, iterationId, responsibleIds, portfoliotypeId);
+            persisted = this.persistNewStory(dataItem, backlogId, iterationId, responsibleIds, portfoliotypeId, productfeatureId);
             //storyRankBusiness.rankToHead(persisted, backlogBusiness.retrieve(iterationId)); // Rank in iteration
         } else {
-            persisted = this.persistNewStory(dataItem, backlogId, responsibleIds, portfoliotypeId);        
+            persisted = this.persistNewStory(dataItem, backlogId, responsibleIds, portfoliotypeId, productfeatureId);        
         }
 
         //old - prevents tree view from exploding until it's fixed 
@@ -481,29 +486,35 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
     
     @Transactional
     /* * {@inheritDoc} */
-    private Story persistNewStory(Story dataItem, Integer backlogId, Set<Integer> responsibleIds, Integer portfoliotypeId) 
+    private Story persistNewStory(Story dataItem, Integer backlogId, Set<Integer> responsibleIds, Integer portfoliotypeId, Integer productfeatureId) 
             throws IllegalArgumentException, ObjectNotFoundException {
-        return persistNewStory(dataItem, backlogId, null, responsibleIds, portfoliotypeId);
+        return persistNewStory(dataItem, backlogId, null, responsibleIds, portfoliotypeId, productfeatureId);
     }
     
     
     @Transactional
     /* * {@inheritDoc} */
-    private Story persistNewStory(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, Integer portfoliotypeId) 
+    private Story persistNewStory(Story dataItem, Integer backlogId, Integer iterationId, Set<Integer> responsibleIds, Integer portfoliotypeId, Integer productfeatureId) 
             throws IllegalArgumentException, ObjectNotFoundException {
         if (dataItem == null || backlogId == null) {
             throw new IllegalArgumentException(
                     "DataItem and backlogId should not be null");
         }
-        Backlog backlog = this.backlogBusiness.retrieve(backlogId);
-        PortfolioType portfoliotype = this.portfoliotypeBusiness.retrieve(portfoliotypeId);
+        Backlog backlog = null;
+        backlog = this.backlogBusiness.retrieve(backlogId);
         if (backlog == null) {
             throw new ObjectNotFoundException("backlog.notFound");
         }
 
+        PortfolioType portfoliotype = null;
+        ProductFeature productfeature = null;
+        if (portfoliotypeId > 0) portfoliotype = this.portfoliotypeBusiness.retrieve(portfoliotypeId);
+        if (productfeatureId > 0) productfeature = this.productfeatureBusiness.retrieve(productfeatureId);
+        
         Story story = new Story();
 
         story.setPortfoliotype(portfoliotype);
+        story.setProductfeature(productfeature);
         this.setResponsibles(story, responsibleIds);
         this.populateStoryFields(story, dataItem);
         
