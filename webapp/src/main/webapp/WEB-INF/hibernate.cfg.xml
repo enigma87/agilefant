@@ -43,5 +43,6 @@ won't map all the package classes
 <mapping class="fi.hut.soberit.agilefant.model.StoryAccess" />
 <mapping class="fi.hut.soberit.agilefant.model.PortfolioType" />
 <mapping class="fi.hut.soberit.agilefant.model.ProductFeature" />
+<mapping class="fi.hut.soberit.agilefant.model.ProjectPlan" />
 </session-factory>
 </hibernate-configuration>
