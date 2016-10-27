@@ -386,4 +386,10 @@ public class TaskBusinessImpl extends GenericBusinessImpl<Task> implements
     public void setHourEntryBusiness(HourEntryBusiness hourEntryBusiness) {
         this.hourEntryBusiness = hourEntryBusiness;
     }
+
+	@Override
+	public Task getTaskById(int taskId) {
+		
+		return taskDAO.get(taskId);
+	}
 }

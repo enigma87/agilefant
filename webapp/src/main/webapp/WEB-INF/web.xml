@@ -123,7 +123,6 @@
     <filter-name>struts</filter-name>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
-  
   <listener>
   	<listener-class>fi.hut.soberit.agilefant.util.AgilefantBuildInitializer</listener-class>
   </listener>

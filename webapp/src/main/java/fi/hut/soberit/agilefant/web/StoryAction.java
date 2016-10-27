@@ -68,8 +68,6 @@ public class StoryAction extends ActionSupport implements CRUDAction, Prefetchin
     
     private List<String> labelNames;
 
-    
-
     @Autowired
     private StoryBusiness storyBusiness;
     

@@ -87,7 +87,7 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
     private LabelBusiness labelBusiness;
     @Autowired
     private PortfoliotypeBusiness portfoliotypeBusiness;
-    @Autowired
+	@Autowired
     private ProductfeatureBusiness productfeatureBusiness;
     
     
@@ -1064,5 +1064,14 @@ public class StoryBusinessImpl extends GenericBusinessImpl<Story> implements
     public void addResponsible(Story story, User user) {
         story.getResponsibles().add(user);
     }
+
+    public void setPortfoliotypeBusiness(PortfoliotypeBusiness portfoliotypeBusiness) {
+		this.portfoliotypeBusiness = portfoliotypeBusiness;
+	}
+
+	public void setProductfeatureBusiness(ProductfeatureBusiness productfeatureBusiness) {
+		this.productfeatureBusiness = productfeatureBusiness;
+	}
+
     
 }

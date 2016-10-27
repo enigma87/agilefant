@@ -273,7 +273,6 @@ public class StoryDAOHibernate extends GenericDAOHibernate<Story> implements
 		crit.addOrder(Order.asc("name"));
 		crit.setMaxResults(SearchBusiness.MAX_RESULTS_PER_TYPE);
 		
-		String op = crit.toString();
 		try {
 			CriteriaImpl criteriaImpl = (CriteriaImpl)crit;
 			SessionImplementor session = criteriaImpl.getSession();

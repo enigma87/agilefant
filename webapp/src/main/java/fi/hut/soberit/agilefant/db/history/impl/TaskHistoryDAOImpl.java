@@ -97,4 +97,57 @@ public class TaskHistoryDAOImpl extends GenericHistoryDAOImpl<Iteration>
         return result;
     }
 
+    
+    @SuppressWarnings("unchecked")
+    public List<AgilefantHistoryEntry> dumpAllTaskRevisions() {
+        
+        List<AgilefantHistoryEntry> result = new ArrayList<AgilefantHistoryEntry>();
+        
+        // generate query on tasks_AUD:
+        AuditQuery query = this.getAuditReader().createQuery()
+                .forRevisionsOfEntity(Task.class, false, true);
+        
+      //row[0]
+        query.addProjection(AuditEntity.revisionType());
+      //row[1]
+        query.addProjection(AuditEntity.property("name")); // tasks by name revisions
+        
+        // the following come from 'agilefant_revisions' table:
+      //row[2]
+        query.addProjection(AuditEntity.revisionNumber());
+      //row[3]
+        query.addProjection(AuditEntity.revisionProperty("timestamp"));
+      //row[4]
+        query.addProjection(AuditEntity.revisionProperty("userId"));
+      //row[5]
+        query.addProjection(AuditEntity.revisionProperty("userName"));
+
+      //row[6]
+        query.addProjection(AuditEntity.property("story_id"));
+        
+        //row[7]
+        query.addProjection(AuditEntity.property("id"));
+      
+        List<Object[]> data = query.getResultList();
+
+        // return result set:
+        for (Object[] row : data) {
+            // construct task:
+           try{ AgilefantRevisionEntity rev = new AgilefantRevisionEntity();
+            rev.setId((Integer)row[2]);
+            rev.setTimestamp((Long)row[3]);
+            rev.setUserId((Integer)row[4]);
+            rev.setUserName((String)row[5]);
+            task.setId((Integer)row[7]);
+            
+            result.add(new AgilefantHistoryEntry(task, rev, (RevisionType) row[0]));
+           } catch (Exception e) {
+        		System.out.println(e.getStackTrace());
+        	} 
+        }
+      
+        return result;
+    }
+
+    
 }

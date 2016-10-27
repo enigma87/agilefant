@@ -14,4 +14,5 @@ import fi.hut.soberit.agilefant.transfer.AgilefantHistoryEntry;
 
 public interface TaskHistoryDAO extends GenericHistoryDAO<Iteration> {
     public List<AgilefantHistoryEntry> retrieveAllTaskRevisions(Iteration iteration);
+    public List<AgilefantHistoryEntry> dumpAllTaskRevisions();
 }

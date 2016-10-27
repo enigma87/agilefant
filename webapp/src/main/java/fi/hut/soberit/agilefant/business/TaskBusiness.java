@@ -141,4 +141,10 @@ public interface TaskBusiness extends GenericBusiness<Task> {
      */
     void deleteAndUpdateHistory(int id,
             HourEntryHandlingChoice hourEntryHandlingChoice);
+    
+    
+    Task getTaskById (int taskId);
 }
+
+
+	

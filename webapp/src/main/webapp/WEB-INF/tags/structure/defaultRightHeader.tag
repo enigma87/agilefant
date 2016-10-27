@@ -13,8 +13,10 @@
   |
   <a target="_blank" href="http://tinyurl.com/agilefant-registration-2013">Register</a>
   |
+  <a target="_blank" href="gitexport.action">git data</a>
+  |
   <a href="j_spring_security_logout?exit=Logout">Logout</a>
-  
+
 </div>
 <div id="updateMessage"></div>
 <div id="cloudMessage"></div>
