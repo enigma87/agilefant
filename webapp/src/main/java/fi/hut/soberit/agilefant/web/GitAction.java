@@ -66,16 +66,27 @@ public class GitAction extends ActionSupport {
     private GitBusiness gitBusiness;   
    
 	
-	public String execute() throws NoHeadException, GitAPIException, IOException{
+	public String execute() throws Exception{
 	   
-	    try{
-	    	   	FileRepositoryBuilder builder = new FileRepositoryBuilder();
-			   	Repository repo = builder.setGitDir(new File("/Users/enigma/hooks"+"//.git")).setMustExist(true).build();
+		// Create HSSF workbook
+		HSSFWorkbook hwb=new HSSFWorkbook();
+		
+		String [] repos = new String []{
+				"/Users/enigma/hooks/.git",
+				"/Users/enigma/Desktop/py_programs/.git"
+		};
+		
+		int indx = 1;
+			 
+		//iterate over repositories create new sheets
+		for (String repo_location : repos) 
+		{
+		 	   	FileRepositoryBuilder builder = new FileRepositoryBuilder();
+			   	Repository repo = builder.setGitDir(new File(repo_location)).setMustExist(true).build();
 			   	Git git = new Git(repo);
 			   	git.pull();
-			
-			   	HSSFWorkbook hwb=new HSSFWorkbook();
-		        HSSFSheet sheet =  hwb.createSheet("commit info");
+			   	
+		        HSSFSheet sheet =  hwb.createSheet("commit info " + indx);
 
 		        Iterable<RevCommit> log = git.log().call();
 		        List<Integer> tasks = new ArrayList<Integer>();
@@ -110,16 +121,21 @@ public class GitAction extends ActionSupport {
 		        	HSSFRow row = sheet.createRow(i);
 		        	Pattern pattern = Pattern.compile("REF\\s+(\\d+)\\s+");
 		        	Matcher matcher = pattern.matcher(rev.getFullMessage());
+		        	
+		        	// set values from git
+		        	HSSFCell cell_0 = row.createCell(0);
+		        	row.createCell(1).setCellValue(rev.getFullMessage());
+	        		row.createCell(2).setCellValue(rev.getCommitterIdent().getName());
+	        		row.createCell(3).setCellValue(rev.getCommitterIdent().getEmailAddress());
+	        		row.createCell(4).setCellValue(sdf.format(rev.getCommitterIdent().getWhen().getTime()));
+	        		row.createCell(5).setCellValue(rev.getCommitterIdent().getTimeZone().getDisplayName());
+	        		
+	        		// if task is available, set values from agilefant database
 		        	if (matcher.find()) {
 		        		Integer taskId = Integer.parseInt(matcher.group(1));
 		        		
 		        				        		
-		        		row.createCell(0).setCellValue(taskId);
-		        		row.createCell(1).setCellValue(rev.getFullMessage());
-		        		row.createCell(2).setCellValue(rev.getCommitterIdent().getName());
-		        		row.createCell(3).setCellValue(rev.getCommitterIdent().getEmailAddress());
-		        		row.createCell(4).setCellValue(sdf.format(rev.getCommitterIdent().getWhen().getTime()));
-		        		row.createCell(5).setCellValue(rev.getCommitterIdent().getTimeZone().getDisplayName());
+		        		cell_0.setCellValue(taskId);
 		        		
 		        		HashMap<String, String> info = new HashMap<String, String>();
 		        		info = dump.get(taskId);
@@ -139,13 +155,18 @@ public class GitAction extends ActionSupport {
 		        	i++;
 		        }
 			   
+		        git.close();
+		        indx++;
+			}
+	
 	        ///////////////////////////////////////////////////////////////////////////////
-
+		    
+		    // Task History Dump
 		    List<AgilefantHistoryEntry> taskHistoryDump = gitBusiness.dumpAllTaskRevisions();    
 		     
-		    HSSFSheet sheet_1 =  hwb.createSheet("task history");
+		    HSSFSheet sheet_1 =  hwb.createSheet("task history ");
 		    
-		    i = 1;
+		    int i = 1;
 		    int k = 0;
 		    String [] cols = new String[] {"USERNAME", "TASK_ID", "TIME_STAMP", "TASK_STATE", "TASK_EFFORT_REMAIN", "TASK_ESTIMATE", "REVISION_TYPE"};
 		    HSSFRow header = sheet_1.createRow(0);
@@ -182,11 +203,6 @@ public class GitAction extends ActionSupport {
 	        ////Here HSSFWorkbook object is sent directly to client w/o saving on server///
 	        ///////////////////////////////////////////////////////////////////////////////
 	    
-	        git.close();
-	    }catch(Exception e){
-	        System.out.println(e.getMessage());
-	    }
-	   	    
 	    return SUCCESS;
 	}
 	
